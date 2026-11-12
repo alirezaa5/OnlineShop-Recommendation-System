@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فروشگاه آنلاین</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>فروشگاه آنلاین</h1>
+        <p>محصولات موجود در فروشگاه</p>
+    </header>
+    <main>
+        <section>
+            <h2>دسته‌بندی‌ها</h2>
+            <ul class="categories">
+                {% for category in categories %}
+                    <li>{{ category.CategoryName }}</li>
+                {% else %}
+                    <li>هنوز دسته‌بندی‌ای ثبت نشده است.</li>
+                {% endfor %}
+            </ul>
+        </section>
+        <section>
+            <h2>محصولات</h2>
+            <div class="products">
+                {% for item in products %}
+                    <article class="card">
+                        <h3>{{ item.ProductName }}</h3>
+                        <p>{{ item.Description or "توضیحی ثبت نشده است." }}</p>
+                        <p>قیمت: {{ "{:,.0f}".format(item.Price) }}</p>
+                        <p>موجودی: {{ item.StockQuantity }}</p>
+                        <a href="{{ url_for('product_detail', product_id=item.ProductID) }}">
+                            مشاهده محصول و پیشنهادها
+                        </a>
+                    </article>
+                {% else %}
+                    <p>محصولی در پایگاه داده وجود ندارد.</p>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+</body>
+</html>
